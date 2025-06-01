@@ -1,3 +1,64 @@
 body {
     height: 100vh;
+    background-color: rgb(131, 125, 125);
+}
+
+.flex {
+    display: flex;
+}
+
+.wrap {
+    flex-wrap: wrap;
+}
+
+.column {
+    flex-direction: column;
+}
+
+.w-90 {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.w-100 {
+    width: 100%
+}
+
+.mr-8px {
+margin-right: 8px;
+}
+
+.center {
+    justify-content: center;
+    align-items: center;
+}
+
+.space-between {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pkm-card {
+    width: 320px;
+    border: 1px solid black;
+    margin: 5px;
+}
+
+.pkm-img-cont {
+    background-color: aqua;
+    margin: 8px;
+}
+
+.pkm-img {
+    height: 160px;
+    object-fit: contain;
+    margin: auto;
+    margin-top: 4px;
+}
+
+.type-round {
+    height: 32px;
+    width: 32px;
+    margin-right: 4px;
 }
