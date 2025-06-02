@@ -1,6 +1,6 @@
 body {
     height: 100vh;
-    background-color: rgb(131, 125, 125);
+    background-color: rgb(160, 152, 152);
 }
 
 .flex {
@@ -13,6 +13,17 @@ body {
 
 .column {
     flex-direction: column;
+}
+
+.h-3vh {
+    min-height: 42px;
+    max-height: 5vh;
+}
+
+.w-70 {
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .w-90 {
@@ -39,15 +50,48 @@ margin-right: 8px;
     align-items: center;
 }
 
+.btn-sm {
+    height: 33px;
+}
+
+header {
+    position: fixed;
+    top: 0;
+}
+
+.content {
+    padding-top: 120px;
+    padding-bottom: 80px;
+}
+
+#offset {
+    width: 64px;
+    margin-right: 8px;
+    margin-left: 4px;
+}
+
+ #limit {
+    width: 64px;
+    margin-right: 8px;
+    margin-left: 4px;
+ }
+
 .pkm-card {
-    width: 320px;
+    width: 300px;
     border: 1px solid black;
     margin: 5px;
+    background-color: rgb(249, 250, 225);
+    border-radius: 8px;
+}
+
+.pkm-title {
+    margin-left: 8px;
 }
 
 .pkm-img-cont {
     background-color: aqua;
     margin: 8px;
+    border-radius: 8px;
 }
 
 .pkm-img {
@@ -58,7 +102,12 @@ margin-right: 8px;
 }
 
 .type-round {
-    height: 32px;
-    width: 32px;
-    margin-right: 4px;
+    height: 30px;
+    width: 30px;
+    margin-right: 8px;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
 }

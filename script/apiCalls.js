@@ -1,14 +1,19 @@
 let apiPokemons = [];
 let apiPokemonData = 0;
+let displayedPokemon = [];
 let actualPokemon = 0;
-let nextSiteUrl = 0;
-let prvsSiteUrl = 0;
-let offset = 60;
-let limit = 10;
+let nextSiteUrl = "";
+let prvsSiteUrl = "";
+let offset = 120;
+let limit = 40;
 
-async function getPokemons() {
+async function getPokemons(url) {
+    console.log(url)
+    if (!url || url == null || url == undefined || url == "null"){
+        url = `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`;
+    }
     if (offset || limit || offset && limit){
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`);
+    const response = await fetch(url);
     const pokemons = await response.json();
     nextSiteUrl = pokemons.next
     prvsSiteUrl = pokemons.previous

@@ -1,26 +1,78 @@
-async function renderPokemon() {
- await getPokemons();
+async function renderPokemon(siteUrl, subLimit) {
+  // Ladeanzeige einblenden
+  document.getElementById("loadingScreen").style.display = "flex";
+    if (subLimit) {
+      let sub = limit + limit;
+      offset -= sub;
+    }
+  buttonCheck();
+  await getPokemons(siteUrl);
+
   if (Array.isArray(apiPokemons)) {
+    document.getElementById("cardWrap").innerHTML = "";
+    displayedPokemon = [];
     for (let i = 0; i < apiPokemons.length; i++) {
       await getPokemonData(apiPokemons[i].url);
-      renderCard(apiPokemons[i].name, i);
+      displayedPokemon.push(apiPokemonData.id);
+      renderCard(apiPokemons[i].name);
       renderColors(i);
     }
     offset += limit;
   } else {
     console.error("apiPokemons is not an array");
   }
+  // Ladeanzeige ausblenden
+  document.getElementById("loadingScreen").style.display = "none";
+  displayPokemons();
+  init();
+
   console.log(apiPokemonData);
 }
 
-async function renderCard(name, i) {
-  let cardWrap = document.getElementById("cardWrap");
-  cardWrap.innerHTML += cardTemplate(name, i);
+function init() {
+  renderButtons();
+  renderLimit();
 }
 
-function renderColors(i) {    
-  const colorContainer = document.getElementById(`pkmImgCont${i}`);
+function buttonCheck() {
+    if (offset >= 1301){
+        offset = 0;
+    } else if (offset < 0){
+        offset = 1302 - limit;
+  }
+}
+
+function displayPokemons() {
+  for (let id of displayedPokemon) {
+    document.getElementById(`card${id}`).style.display = "block";
+  }
+}
+
+async function renderCard(name) {
+  const cardWrap = document.getElementById("cardWrap");
+  // Nur das neue Template einfügen, ohne den DOM komplett zu ersetzen
+  cardWrap.innerHTML += cardTemplate(name);
+}
+
+function renderColors() {
+  const colorContainer = document.getElementById(`pkmImgCont${apiPokemonData.id}`);
   colorContainer.style = colorTemplate();
+}
+
+function renderButtons() {
+  const buttonWrap = document.getElementById("buttonWrap")
+  buttonWrap.innerHTML = buttonTemplate();
+}
+
+function renderLimit() {
+  const limitWrap = document.getElementById("limitWrap");
+  limitWrap.innerHTML = limitTemplate();
+}
+
+function setVariables() {
+  offset = parseFloat(document.getElementById('offset').value) - 1;
+  limit = parseFloat(document.getElementById('limit').value);
+  renderPokemon();
 }
 
 renderPokemon();

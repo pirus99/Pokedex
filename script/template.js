@@ -1,20 +1,20 @@
-function cardTemplate(name, i) {
+function cardTemplate(name) {
     return `
-        <div class="pkm-card">
-            <div onclick="openWindow()" class="flex space-between mt-1">
+        <div onclick="openWindow()"  id="card${apiPokemonData.id}" class="pkm-card" style="display: none;">
+            <div class="flex space-between mt-1">
                 <div class="flex">
-                    <h5 class="mr-8px mt-1">#${apiPokemonData.id}</h5><h4>${name}</h4>
+                    <h4 class="pkm-title">${name}</h4>
                 </div>
                 <div class="flex">
                     <h5 class="mr-8px mt-1">${apiPokemonData.stats[0].base_stat}HP</h5>
                     ${apiPokemonData.types.map(typeObj => `
-                        <img class="type-round" src="./artwork/icons/${typeObj.type.name}.svg" alt="${typeObj.type.name}">
+                        <img class="type-round" src="${address}pokedex/assets/icons/${typeObj.type.name}.svg" alt="${typeObj.type.name}" title="${typeObj.type.name}">
                         `).join('')}
                 </div>
             </div>
 
-            <div class="row flex space-between pkm-img-cont" id="pkmImgCont${i}">
-                <img class="pkm-img" src="./artwork/${String(apiPokemonData.id).padStart(3, '0')}.png" alt="${name}">
+            <div class="row flex space-between pkm-img-cont" id="pkmImgCont${apiPokemonData.id}">
+                <img onclick="openWindow()" class="pkm-img" src="${address}pokedex/assets/${String(apiPokemonData.id).padStart(3, '0')}.png" alt="${name}">
                 <h6 class="text-center mt-1">#${String(apiPokemonData.id).padStart(3, '0')}</h6>
             </div>
         </div>
@@ -25,24 +25,24 @@ function cardTemplate(name, i) {
 function colorTemplate() {
   let color = [];
   const colors = [
-    "normal:#808080",
+    "normal:#828282",
     "fighting:#e49021",
-    "flying:#BDF7FF",
+    "flying:#7eb0d1",
     "poison:#9354cb",
-    "ground:#D3D3D3",
-    "rock:#B3B3B3",
-    "bug:#A3E23D",
-    "ghost:#7351ED",
-    "steel:#B3B3B3",
-    "fire:#FF4500",
+    "ground:#a4733c",
+    "rock:#a9a481",
+    "bug:#9f9f28",
+    "ghost:#6f4570",
+    "steel:#74b0cb",
+    "fire:#e4613e",
     "water:#3099e1",
     "grass:#449838",
-    "electric:#F9E76C",
+    "electric:#dfbc28",
     "psychic:#e96c8c",
-    "ice:#ADD8E6",
-    "dragon:#8350D9",
+    "ice:#47c8c8",
+    "dragon:#576fbc",
     "dark:rgb(48, 45, 45)",
-    "fairy:rgb(237, 150, 240)",
+    "fairy:#e18ce1",
   ];
   for (let j = 0; j < colors.length; j++) {
     for (let t = 0; t < apiPokemonData.types.length; t++) {
@@ -60,3 +60,24 @@ function colorTemplate() {
   }
 }
 
+function buttonTemplate() {
+  return `
+    <button id="prvsButton" onclick="renderPokemon('${prvsSiteUrl}', true)" class="btn btn-primary">Previous</button>
+    <button id="nextButton" onclick="renderPokemon('${nextSiteUrl}', false)" class="btn btn-primary">Next</button>
+  `;
+}
+
+function limitTemplate() {
+  return `
+
+    <div class="mb-3 flex align-items-center">
+        <label for="limit" class="form-label">Pokemon per Page:</label>
+        <input type="number" class="form-control-sm" id="limit" value="${limit}" >
+    </div>
+    <div class="mb-3 flex align-items-center">
+        <label for="offset" class="form-label">First Pokemon:</label>
+        <input type="number" class="form-control-sm" id="offset" value="${offset - limit + 1}">
+    </div>
+    <button onclick="setVariables()" class="btn btn-primary btn-sm">Set Filters</button>
+  `;
+}
