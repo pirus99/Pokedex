@@ -75,4 +75,49 @@ function setVariables() {
   renderPokemon();
 }
 
+async function openWindow(id) {
+  const bigCard = document.getElementById('bigCard');
+  bigCard.style.display = "flex";
+  await getPokemonData(`https://pokeapi.co/api/v2/pokemon/${id}`)
+  renderBigCard(id);
+  renderInfo(0, id);
+  renderColors();
+}
+
+function renderBigCard(id) {
+  const bigCard = document.getElementById("bigCard")
+  bigCard.innerHTML = bigCardTemplate(id);
+}
+
+async function renderInfo(site, id) {
+  btnMan();
+  const infoWrap = document.getElementById('infoWrap');
+  if (site === 'stats') {
+    infoWrap.innerHTML = statsTemplate(id);
+    btnMan('stats');
+  } else if (site === 'evolution') {
+    infoWrap.innerHTML = evolutionTemplate(id);
+    btnMan('evolution');
+  } else if (site === 'moves') {
+    infoWrap.innerHTML = movesTemplate(id);
+    btnMan('moves');
+  } else {
+    await getAboutPkm(id)
+    infoWrap.innerHTML = aboutTemplate(id);
+    btnMan('about');
+  }
+}
+
+function btnMan(button) { //Manages Buttons like a Pro
+  if (!button) {
+    const btns = document.querySelectorAll('.bigCardNav button');
+    for (let i = 0; i < btns.length; i++) {
+      btns[i].classList.remove('activeBtn');
+    }
+  } else {
+    const actButton = document.getElementById(button + 'Btn');
+    actButton.classList.add('activeBtn');
+  }
+}
+
 renderPokemon();

@@ -60,7 +60,7 @@ header {
 }
 
 .content {
-    padding-top: 120px;
+    padding-top: 80px;
     padding-bottom: 80px;
 }
 
@@ -84,8 +84,30 @@ header {
     border-radius: 8px;
 }
 
+#bigCard {
+    position: fixed;
+    width: 100%;
+    height: 74.5%;
+    z-index: 9999;
+    background-color: rgba(173, 216, 230, 0.473);
+}
+
+.bigPkm-card {
+    max-width: 620px;
+    border: 1px solid black;
+    margin: 5px;
+    background-color: rgb(249, 250, 225);
+    border-radius: 8px;
+}
+
 .pkm-title {
     margin-left: 8px;
+}
+
+.type-cubic {
+    margin-right: 8px;
+    margin-top: 5px;
+    height: 24px;
 }
 
 .pkm-img-cont {
@@ -110,4 +132,9 @@ header {
 .footer {
     position: fixed;
     bottom: 0;
+}
+
+.activeBtn {
+    border-bottom: 4px solid black;
+    font-weight: bold;
 }

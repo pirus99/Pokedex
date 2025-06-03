@@ -4,8 +4,9 @@ let displayedPokemon = [];
 let actualPokemon = 0;
 let nextSiteUrl = "";
 let prvsSiteUrl = "";
-let offset = 120;
-let limit = 40;
+let offset = 0;
+let limit = 8;
+let apiPokemonSpeciesData = [];
 
 async function getPokemons(url) {
     console.log(url)
@@ -35,3 +36,12 @@ async function getPokemonData(url) {
     actualPokemon = data.id
     apiPokemonData = (data)
 }
+
+async function getAboutPkm(name) {
+    let url = `https://pokeapi.co/api/v2/pokemon-species/${name}/`;
+    const response = await fetch(url);
+    const pokemonSpecies = await response.json();
+    apiPokemonSpeciesData = pokemonSpecies;
+    console.log(apiPokemonSpeciesData);   
+}
+

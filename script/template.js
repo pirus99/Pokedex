@@ -1,6 +1,6 @@
 function cardTemplate(name) {
     return `
-        <div onclick="openWindow()"  id="card${apiPokemonData.id}" class="pkm-card" style="display: none;">
+        <div onclick="openWindow(${apiPokemonData.id})"  id="card${apiPokemonData.id}" class="pkm-card" style="display: none;">
             <div class="flex space-between mt-1">
                 <div class="flex">
                     <h4 class="pkm-title">${name}</h4>
@@ -14,7 +14,7 @@ function cardTemplate(name) {
             </div>
 
             <div class="row flex space-between pkm-img-cont" id="pkmImgCont${apiPokemonData.id}">
-                <img onclick="openWindow()" class="pkm-img" src="${address}pokedex/assets/${String(apiPokemonData.id).padStart(3, '0')}.png" alt="${name}">
+                <img class="pkm-img" src="${address}pokedex/assets/${String(apiPokemonData.id).padStart(3, '0')}.png" alt="${name}">
                 <h6 class="text-center mt-1">#${String(apiPokemonData.id).padStart(3, '0')}</h6>
             </div>
         </div>
@@ -81,3 +81,44 @@ function limitTemplate() {
     <button onclick="setVariables()" class="btn btn-primary btn-sm">Set Filters</button>
   `;
 }
+
+function bigCardTemplate(id) {
+  return `
+        <div id="bigCardModal" class="bigPkm-card">
+            <div class="flex space-between mt-1">
+                <div class="flex">
+                    <h4 class="pkm-title">${apiPokemonData.name}</h4>
+                </div>
+                <div class="flex">
+                    <h5 class="mr-8px mt-1">${apiPokemonData.stats[0].base_stat}HP</h5>
+                    ${apiPokemonData.types.map(typeObj => `
+                        <img class="type-cubic" src="${address}pokedex/assets/icons-normal/${typeObj.type.name}.png" alt="${typeObj.type.name}" title="${typeObj.type.name}">
+                        `).join('')}
+                </div>
+            </div>
+
+            <div class="row flex space-between pkm-img-cont" id="pkmImgCont${apiPokemonData.id}">
+                <img class="pkm-img" src="${address}pokedex/assets/${String(apiPokemonData.id).padStart(3, '0')}.png" alt="${name}">
+                <h6 class="text-center mt-1">#${String(apiPokemonData.id).padStart(3, '0')}</h6>
+            </div>
+            <div class="row flex space-evenly pkm-stats-cont">
+                <nav class="bigCardNav" id="bigCardNav">
+                    <button id="aboutBtn" onclick="renderInfo('about', '${id}')">About</button>
+                    <button id="statsBtn" onclick="renderInfo('stats', '${id}')">Stats</button>
+                    <button id="evolutionBtn" onclick="renderInfo('evolution', '${id}')">Evolution</button>
+                    <button id="movesBtn" onclick="renderInfo('moves', '${id}')">Moves</button>
+                </nav>
+            <div id="infoWrap" class="flex">
+            </div>  
+            </div>          
+        </div>
+    `;
+}
+
+function aboutTemplate(id) {
+   return `
+        <h2>About ${apiPokemonData.name}</h2>
+
+        `;
+      }
+
