@@ -1,140 +1,292 @@
 body {
-    height: 100vh;
-    background-color: rgb(160, 152, 152);
+  height: 100vh;
+  background-color: rgb(160, 152, 152);
+  display: flex;
+  flex-direction: column;
 }
 
 .flex {
-    display: flex;
+  display: flex;
 }
 
 .wrap {
-    flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 
 .column {
-    flex-direction: column;
+  flex-direction: column;
 }
 
 .h-3vh {
-    min-height: 42px;
-    max-height: 5vh;
+  min-height: 42px;
+  max-height: 5vh;
 }
 
 .w-70 {
-    width: 70%;
-    margin-left: auto;
-    margin-right: auto;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .w-90 {
-    width: 90%;
-    margin-left: auto;
-    margin-right: auto;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .w-100 {
-    width: 100%
+  width: 100%;
 }
 
 .mr-8px {
-margin-right: 8px;
+  margin-right: 8px;
 }
 
 .center {
-    justify-content: center;
-    align-items: center;
+  justify-content: center;
+  align-items: center;
 }
 
 .space-between {
-    justify-content: space-between;
-    align-items: center;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .btn-sm {
-    height: 33px;
+  height: 33px;
+}
+
+.btn-outline-primary {
+    border: 3px solid;
+    background-color: rgba(0, 0, 255, 0.13);
 }
 
 header {
-    position: fixed;
-    top: 0;
+  position: fixed;
+  top: 0;
+  z-index: 10;
+}
+
+.search-input {
+  width: 132px;
+}
+
+header h1 {
+  margin-left: 132px;
+}
+
+footer {
+  position: relative;
+  bottom: 0;
+}
+
+footer a {
+    color: white;
 }
 
 .content {
-    padding-top: 80px;
-    padding-bottom: 80px;
+  padding-top: 80px;
+  padding-bottom: 20px;
+  flex: 1;
 }
+
+#limitWrap {
+    padding-top: 20px !important;
+}
+
 
 #offset {
-    width: 64px;
-    margin-right: 8px;
-    margin-left: 4px;
+  width: 64px;
+  margin-right: 8px;
+  margin-left: 4px;
 }
 
- #limit {
-    width: 64px;
-    margin-right: 8px;
-    margin-left: 4px;
- }
+#limit {
+  width: 64px;
+  margin-right: 8px;
+  margin-left: 4px;
+}
 
 .pkm-card {
-    width: 300px;
-    border: 1px solid black;
-    margin: 5px;
-    background-color: rgb(249, 250, 225);
-    border-radius: 8px;
+  width: 300px;
+  border: 1px solid black;
+  margin: 5px;
+  background-color: rgb(249, 250, 225);
+  border-radius: 8px;
 }
 
-#bigCard {
-    position: fixed;
-    width: 100%;
-    height: 74.5%;
-    z-index: 9999;
-    background-color: rgba(173, 216, 230, 0.473);
+.pkm-card:hover {
+  transform: scale(1.04);
+  transition: transform 0.2s ease-in-out;
+  cursor: pointer;
 }
 
-.bigPkm-card {
-    max-width: 620px;
-    border: 1px solid black;
-    margin: 5px;
-    background-color: rgb(249, 250, 225);
-    border-radius: 8px;
+.title-wrap {
+  margin-top: 8px;
+  justify-content: sp;
 }
 
 .pkm-title {
-    margin-left: 8px;
+  margin-left: 8px;
 }
 
 .type-cubic {
-    margin-right: 8px;
-    margin-top: 5px;
-    height: 24px;
+  margin-right: 8px;
+  margin-top: 5px;
+  height: 24px;
 }
 
 .pkm-img-cont {
-    background-color: aqua;
-    margin: 8px;
-    border-radius: 8px;
+  background-color: aqua;
+  margin: 8px;
+  border-radius: 8px;
 }
 
 .pkm-img {
-    height: 160px;
-    object-fit: contain;
-    margin: auto;
-    margin-top: 4px;
+  height: 160px;
+  object-fit: contain;
+  margin: auto;
+  margin-top: 4px;
 }
 
 .type-round {
-    height: 30px;
-    width: 30px;
-    margin-right: 8px;
-}
-
-.footer {
-    position: fixed;
-    bottom: 0;
+  height: 30px;
+  width: 30px;
+  margin-right: 8px;
 }
 
 .activeBtn {
-    border-bottom: 4px solid black;
-    font-weight: bold;
+  font-weight: bold;
+}
+
+#bigCard {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  z-index: 9999;
+  background-color: rgba(173, 216, 230, 0.473);
+}
+
+#bigCardModal {
+  max-height: 88vh;
+  margin-bottom: 64px;
+}
+
+#loadingSpinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#loadingSpinner img {
+  object-fit: contain;
+}
+
+.bigPkm-card {
+  width: 620px;
+  border: 1px solid black;
+  margin: 5px;
+  background-color: rgb(249, 250, 225);
+  border-radius: 8px;
+}
+
+.bigCardNav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bigCardNav button {
+  margin: 8px;
+}
+
+.pkm-gif {
+  height: 80px;
+  width: auto;
+  object-fit: contain;
+}
+
+.mx-h-20 {
+  max-height: 41vh;
+}
+
+.evoPkmMiniCard {
+  border: 1px solid black;
+  border-radius: 4px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.evoPkmMiniCard:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+  transition: transform 0.3s ease-in-out;
+}
+
+.pkm-gif-evo {
+  max-width: 80px;
+}
+
+body.no-scroll {
+  overflow: hidden;
+}
+
+.loading-overlay {
+  flex: 1;
+  height: 100%;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.arrowBtn {
+  background-color: rgba(240, 248, 255, 0.329);
+  border-radius: 8px;
+}
+
+@media (max-width: 630px) {
+  header h1 {
+    display: none;
+  }
+  #bigCard {
+    align-items: start !important;
+  }
+  #bigCardModal {
+    max-height: 88vh;
+    margin-bottom: 20px;
+  }
+  .evoPkmMiniCard {
+    width: 95%;
+  }
+}
+
+@media (max-width: 470px) {
+  .type-sign-normal {
+    display: none;
+  }
+  .type-sign-round {
+    display: flex !important;
+  }
+  .hide-mobile {
+    display: none;
+  }
+  .show-mobile {
+    display: block !important;
+  }
+}
+
+@media (min-width: 1620px) {
+    .head-content {
+        max-width: 1440px;
+    }
+    #buttonWrap {
+        max-width: 1240px;
+    }
+}
+
+@media (min-height: 1230px) {
+    #limitWrap {
+       padding-top: 40px !important;
+    }
 }

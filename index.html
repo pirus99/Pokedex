@@ -23,12 +23,12 @@
     <header class="w-100 pt-2 pb-2 mb-5 bg-dark text-white">
         <div class="head-content flex space-between align-items-center w-90">
             <img src="./img/Pokeball.png" alt="Pokeball" class="h-3vh">
-            <h1 class="">PokeDex</h1>
-            <nav class="">
+            <h1>PokeDex</h1>
+            <nav>
                 <ul class="list-inline mt-3">
                     <form action="searchPokemon()">
-                        <input type="text" name="search" placeholder="Search Pokemon">
-                        <button type="submit">Search</button>
+                        <input class="search-input" type="text" name="search" placeholder="Search Pokemon">
+                        <button type="submit">&#128269;</button>
                     </form>
                 </ul>
             </nav>
@@ -36,7 +36,6 @@
     </header>
     <div id="content" class="content">
         <div id="bigCard" style="display: none;" class="flex justify-content-center align-items-center">
-            BIG CARD
         </div>
         <div id="limitWrap" class="container flex justify-content-center wrap w-100 mt-3">
         </div>
@@ -49,15 +48,10 @@
         <div id="buttonWrap" class="button-wrap flex space-between mt-4 mb-5 w-70">
         </div>
     </div>
-    <footer class="footer bg-dark text-light p-3 w-100 flex space-between">
-        <p>&copy; 2025</p>
-        <nav class="">
-            <ul class="list-inline">
-                <li><a href="#about" class="">About</a></li>
-                <li><a href="#privacy-policy" class="">Privacy Policy</a></li>
-            </ul>
-        </nav>
-    </footer>    
+    <footer class="footer bg-dark text-light pt-3 w-100">
+        <p class="text-center">&copy; 2025, Miles Pickull<br>
+            Powered by <a href="https://pokeapi.co">PokeApi.co</a></p>
+    </footer>
     <script src="./script/address.js"></script>
     <script src="./script/apiCalls.js"></script>
     <script src="./script/script.js"></script>
