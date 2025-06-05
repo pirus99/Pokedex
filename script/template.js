@@ -43,35 +43,6 @@ function cardTemplate(name) {
 
 }
 
-function colorTemplate(call, i) {
-  let color = [];
-  if (!call) {
-    for (let j = 0; j < colors.length; j++) {
-      for (let t = 0; t < apiPokemonData.types.length; t++) {
-        if (apiPokemonData.types[t].type.name === colors[j].split(":")[0]) {
-          color.push(`${colors[j].split(":")[1]}`);
-        } else {
-          continue;
-        }
-      }
-    }
-  } else {
-    for (let j = 0; j < colors.length; j++) {
-      for (let t = 0; t < types[i].length; t++) {
-        if (types[i][t].type.name === colors[j].split(":")[0]) {
-          color.push(`${colors[j].split(":")[1]}`);
-        } else {
-          continue;
-        }
-      }
-    }
-  } if (color.length === 1) {
-    return `background-color: ${color[0]}`;
-  } else {
-    return `background: linear-gradient(to top left, ${color[0]} 50%, ${color[1]} 50%);`;
-  }
-}
-
 function buttonTemplate() {
   return `
     <button id="prvsButton" onclick="renderPokemon('${prvsSiteUrl}', true)" class="btn btn-outline-primary btn-lg">&#129128;</button>

@@ -1,19 +1,8 @@
 loadFromLoacalstorage();
 
 async function renderPokemon(siteUrl, subLimit) {
-  // Ladeanzeige einblenden
-  saveOffset();
-  document.getElementById('buttonWrap').style.display = "none";
-  document.getElementById("loadingScreen").style.display = "flex";
-  if (subLimit) {
-    let sub = limit + limit;
-    offset -= sub;
-    saveOffset();
-  }
-  buttonCheck();
-
+  beforeRender(subLimit);
   await getPokemons(siteUrl);
-
   if (Array.isArray(apiPokemons)) {
     document.getElementById("cardWrap").innerHTML = "";
     displayedPokemon = [];
@@ -27,11 +16,26 @@ async function renderPokemon(siteUrl, subLimit) {
   } else {
     console.error("apiPokemons is not an array");
   }
+  afterRender();
+}
+
+function beforeRender(subLimit) {
+  // Ladeanzeige einblenden
+  saveOffset();
+  document.getElementById('buttonWrap').style.display = "none";
+  document.getElementById("loadingScreen").style.display = "flex";
+  if (subLimit) {
+    offset -= limit * 2;
+    saveOffset();
+  }
+  buttonCheck();
+}
+
+function afterRender() {
   document.getElementById("loadingScreen").style.display = "none";
   renderButtons();
   displayPokemons();
   init();
-  console.log(apiPokemonData);
 }
 
 function init() {
@@ -61,12 +65,12 @@ async function renderCard(name) {
 
 function renderColors() {
   const colorContainer = document.getElementById(`pkmImgCont${apiPokemonData.id}`);
-  colorContainer.style = colorTemplate();
+  colorContainer.style = colorPicker();
 }
 
 function renderColorsEvo(id, i) {
   const colorContainer = document.getElementById(`pkmEvoCard${id}`);
-  colorContainer.style = colorTemplate(true, i);
+  colorContainer.style = colorPicker(true, i);
 }
 
 function renderButtons() {
@@ -90,6 +94,44 @@ function setVariables() {
 function saveOffset() {
   localStorage.setItem('offset', offset);
   localStorage.setItem('limit', limit);
+}
+
+function colorPicker(call, i) {
+  color = [];
+  if (!call) {
+    pickColors();
+  } else {
+    pickColorsEvo(i);
+  } 
+  if (color.length === 1) {
+    return `background-color: ${color[0]}`;
+  } else {
+    return `background: linear-gradient(to top left, ${color[0]} 50%, ${color[1]} 50%);`;
+  }
+}
+
+function pickColors() {
+  for (let j = 0; j < colors.length; j++) {
+    for (let t = 0; t < apiPokemonData.types.length; t++) {
+      if (apiPokemonData.types[t].type.name === colors[j].split(":")[0]) {
+        color.push(`${colors[j].split(":")[1]}`);
+      } else {
+        continue;
+      }
+    }
+  }
+}
+
+function pickColorsEvo(i) {
+  for (let j = 0; j < colors.length; j++) {
+    for (let t = 0; t < types[i].length; t++) {
+      if (types[i][t].type.name === colors[j].split(":")[0]) {
+        color.push(`${colors[j].split(":")[1]}`);
+      } else {
+        continue;
+      }
+    }
+  }
 }
 
 async function openWindow(id) {
@@ -117,11 +159,7 @@ function renderBigCard(id) {
 
 async function renderInfo(site, id) {
   const infoWrap = document.getElementById('infoWrap');
-  btnMan();
-  document.getElementById('loadingScreenInfo').style.display = "flex";
-  document.getElementById('loadingScreenBigCard').style.display = "none";
-  await getAboutPkm(id)
-  await getEvolutionPkm(apiPokemonSpeciesData.evolution_chain.url);
+  await beforeRenderInfo(id);
   if (site === 'stats') {
     infoWrap.innerHTML = statsTemplate(id);
     pbMan();
@@ -135,6 +173,14 @@ async function renderInfo(site, id) {
     btnMan('about');
   }
   document.getElementById('loadingScreenInfo').style.display = "none";
+}
+
+ async function beforeRenderInfo(id){
+  btnMan();
+  document.getElementById('loadingScreenInfo').style.display = "flex";
+  document.getElementById('loadingScreenBigCard').style.display = "none";
+  await getAboutPkm(id)
+  await getEvolutionPkm(apiPokemonSpeciesData.evolution_chain.url);
 }
 
 function btnMan(button) { //Manages Buttons like a Pro
@@ -155,11 +201,9 @@ function pbMan() {   //Manages Progress-Bars like a Pro
   const progressBars = document.querySelectorAll('.progress-bar');
   const thresholds = [32, 62, 88];
   const colors = ['bg-success', 'bg-warning', 'bg-danger'];
-
   progressBars.forEach(bar => {
     const value = parseInt(bar.getAttribute('aria-valuenow'));
     let colorIndex = 0;
-
     if (value >= thresholds[2]) {
       colorIndex = 2;
     } else if (value >= thresholds[1]) {
@@ -191,21 +235,11 @@ document.addEventListener('click', function (event) {
 
 function mapChains() {
   if (apiPokemonEvolutionData && apiPokemonEvolutionData.chain) {
-
-    // Push the base species URL
     chainBaseUrl.push(apiPokemonEvolutionData.chain.species.url);
-
-    // First level of evolution
     const firstEvolutions = apiPokemonEvolutionData.chain.evolves_to;
-    if (Array.isArray(firstEvolutions)) {
-      firstEvolutions.forEach(firstEvolution => {
-        chainUrlsL1.push(firstEvolution.species.url);
-
-        // Second level of evolution
+    if (Array.isArray(firstEvolutions)) {firstEvolutions.forEach(firstEvolution => {chainUrlsL1.push(firstEvolution.species.url);
         const secondEvolutions = firstEvolution.evolves_to;
-        if (Array.isArray(secondEvolutions)) {
-          secondEvolutions.forEach(secondEvolution => {
-            chainUrlsL2.push(secondEvolution.species.url);
+        if (Array.isArray(secondEvolutions)) {secondEvolutions.forEach(secondEvolution => {chainUrlsL2.push(secondEvolution.species.url);
           });
         }
       });
@@ -215,7 +249,7 @@ function mapChains() {
   }
 }
 
-function renderEvoChainElements() {
+function beforeRenderEvoChainElements() {
   const chainL1Wrap = document.getElementById('chainL1Wrap');
   const chainL2Wrap = document.getElementById('chainL2Wrap');
   const chainBaseWrap = document.getElementById('chainBaseWrap');
@@ -223,6 +257,10 @@ function renderEvoChainElements() {
   chainL2Wrap.innerHTML = '';
   chainBaseWrap.innerHTML = chainBaseTemplate();
   renderColorsEvo(chainBase.id, 0)
+}
+
+function renderEvoChainElements() {
+  beforeRenderEvoChainElements()
   for (let i = 0; i < chainL1.length; i++) {
     chainL1Wrap.innerHTML += chainL1Template(i);
     renderColorsEvo(chainL1[i].id, i + 1);

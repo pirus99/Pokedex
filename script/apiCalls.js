@@ -15,9 +15,9 @@ let chainBase = [];
 let chainL1 = [];
 let chainL2 = [];
 let types = [];
+let color = [];
 
 async function getPokemons(url) {
-  console.log(url);
   if (!url || url == null || url == undefined || url == "null") {
     url = `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`;
   }
@@ -32,7 +32,6 @@ async function getPokemons(url) {
     const pokemons = await response.json();
     apiPokemons = pokemons.results;
   }
-  console.log(apiPokemons);
 }
 
 async function getPokemonData(url) {
@@ -50,17 +49,15 @@ async function getAboutPkm(name) {
   const response = await fetch(url);
   const pokemonSpecies = await response.json();
   apiPokemonSpeciesData = pokemonSpecies;
-  console.log(apiPokemonSpeciesData);
 }
 
 async function getEvolutionPkm(url) {
   const response = await fetch(url);
   const pokemonSpecies = await response.json();
   apiPokemonEvolutionData = pokemonSpecies;
-  console.log(apiPokemonEvolutionData);
 }
 
-async function getEvolutionChainPkms() {
+function clearEvolution() {
   chainBase = [];
   chainBaseUrl = [];
   chainL1 = [];
@@ -69,23 +66,39 @@ async function getEvolutionChainPkms() {
   chainUrlsL2 = [];
   mapChains();
   types = [];
+}
+
+async function evolutionBase() {
   resp = await fetch(chainBaseUrl);
   chainBase = await resp.json();
   await getPokemonData(`https://pokeapi.co/api/v2/pokemon/${chainBase.id}`);
   types.push(apiPokemonData.types);
-  for (let i = 0; i < chainUrlsL1.length; i++) {
+}
+
+async function evolutionL1() {
+    for (let i = 0; i < chainUrlsL1.length; i++) {
     response = await fetch(chainUrlsL1[i]);
     data = await response.json();
     await getPokemonData(`https://pokeapi.co/api/v2/pokemon/${data.id}`);
     types.push(apiPokemonData.types);
     chainL1.push(data);
   }
-  for (let i = 0; i < chainUrlsL2.length; i++) {
+}
+
+async function evolutionL2() {
+    for (let i = 0; i < chainUrlsL2.length; i++) {
     response = await fetch(chainUrlsL2[i]);
     data = await response.json();
     await getPokemonData(`https://pokeapi.co/api/v2/pokemon/${data.id}`);
     types.push(apiPokemonData.types);
     chainL2.push(data);
   }
+}
+
+async function getEvolutionChainPkms() {
+  clearEvolution();
+  await evolutionBase();
+  await evolutionL1();
+  await evolutionL2();
   renderEvoChainElements();
 }
