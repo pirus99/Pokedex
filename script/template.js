@@ -68,7 +68,7 @@ function limitTemplate() {
 function searchTemplate() {
   return`
     <div class="mb-3 flex align-items-center justify-content-center mt-4">
-      <button class="btn btn-danger mr-8px" onclick="renderPokemonAgain()">X</button><h3 class="mt-1 mr-8px">Suche Nach:</h3><h4 class="mt-1">"${search}"</h4>
+      <button class="btn btn-danger mr-8px" onclick="renderPokemonAgain()">X</button><h3 class="mt-1 mr-8px">Search for:</h3><h4 class="mt-1">"${search}"</h4>
     </div>
   `;
 }
