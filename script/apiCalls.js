@@ -1,3 +1,4 @@
+let apiPokemonsFull = [];
 let apiPokemons = [];
 let apiPokemonData = 0;
 let displayedPokemon = [];
@@ -16,22 +17,13 @@ let chainL1 = [];
 let chainL2 = [];
 let types = [];
 let color = [];
+let search = "";
 
-async function getPokemons(url) {
-  if (!url || url == null || url == undefined || url == "null") {
-    url = `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`;
-  }
-  if (offset || limit || (offset && limit)) {
-    const response = await fetch(url);
-    const pokemons = await response.json();
-    nextSiteUrl = pokemons.next;
-    prvsSiteUrl = pokemons.previous;
-    apiPokemons = pokemons.results;
-  } else {
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon`);
-    const pokemons = await response.json();
-    apiPokemons = pokemons.results;
-  }
+function getPokemons(page) {
+  apiPokemons = [];
+    for (let index = offset; index < (offset + limit); index++) {
+      apiPokemons.push(apiPokemonsFull[index]);      
+    }
 }
 
 async function getPokemonData(url) {

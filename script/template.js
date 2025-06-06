@@ -45,8 +45,8 @@ function cardTemplate(name) {
 
 function buttonTemplate() {
   return `
-    <button id="prvsButton" onclick="renderPokemon('${prvsSiteUrl}', true)" class="btn btn-outline-primary btn-lg">&#129128;</button>
-    <button id="nextButton" onclick="renderPokemon('${nextSiteUrl}', false)" class="btn btn-outline-primary btn-lg">&#129130;</button>
+    <button id="prvsButton" onclick="renderPokemon(true)" class="btn btn-outline-primary btn-lg">&#129128;</button>
+    <button id="nextButton" onclick="renderPokemon(false)" class="btn btn-outline-primary btn-lg">&#129130;</button>
   `;
 }
 
@@ -62,6 +62,14 @@ function limitTemplate() {
         <input type="number" class="form-control-sm" id="offset" value="${offset - limit + 1}">
     </div>
     <button onclick="setVariables()" class="btn btn-primary btn-sm">Set Filters</button>
+  `;
+}
+
+function searchTemplate() {
+  return`
+    <div class="mb-3 flex align-items-center justify-content-center mt-4">
+      <button class="btn btn-danger mr-8px" onclick="renderPokemonAgain()">X</button><h3 class="mt-1 mr-8px">Suche Nach:</h3><h4 class="mt-1">"${search}"</h4>
+    </div>
   `;
 }
 
@@ -196,6 +204,16 @@ function statsTemplate(id) {
         </div>
       </div>
         `;
+}
+
+function noPkmsFoundTemplate() {
+  return `'
+    <div class="row">
+      <div class="col center">
+        <h4 class="pt-3">No Pokemons Found</h4>
+        <img class="img-fluid mt-4" src="./img/pokemon-searching.gif" alt="Nothing Found">
+      </div>
+    </div>';`
 }
 
 function evolutionTemplate() {

@@ -27,17 +27,25 @@
             <nav>
                 <ul class="list-inline mt-3">
                     <form action="searchPokemon()">
-                        <input class="search-input" type="text" name="search" placeholder="Search Pokemon">
-                        <button type="submit">&#128269;</button>
+                        <input id="searchInput" class="search-input" type="text" name="search" placeholder="Search Pokemon"
+                            onkeyup="if(this.value.length >= 3) filterPokemons()">
+                        <button type="submit" 
+                            onclick="event.preventDefault(); if(document.getElementById('searchInput').value.length >= 3) filterPokemons(); else showAlert('Search Word must be at least 3 Characters long!')">
+                            &#128269;
+                        </button>
                     </form>
                 </ul>
             </nav>
         </div>
     </header>
     <div id="content" class="content">
+        <h4 id="alertWrap" style="display: none; position: fixed; top: 84px; right: 16px;" class="alert alert-danger" data-mdb-animation="slide-out-right fade-in-down fade-out-up">
+        </h4>
         <div id="bigCard" style="display: none;" class="flex justify-content-center align-items-center">
         </div>
         <div id="limitWrap" class="container flex justify-content-center wrap w-100 mt-3">
+        </div>
+        <div id="searchWordWrap" class="container flex justify-content-center wrap w-100 mt-3">
         </div>
         <div id="cardWrap" class="container flex justify-content-center wrap w-100"></div>
         <div id="loadingScreen" class="loading-overlay justify-content-center align-items-center">

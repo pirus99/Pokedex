@@ -1,8 +1,11 @@
-loadFromLoacalstorage();
+(async () => {
+  await loadFromLoacalstorage();
+  renderPokemon();
+})();
 
-async function renderPokemon(siteUrl, subLimit) {
+async function renderPokemon(subLimit) {
   beforeRender(subLimit);
-  await getPokemons(siteUrl);
+  getPokemons();
   if (Array.isArray(apiPokemons)) {
     document.getElementById("cardWrap").innerHTML = "";
     displayedPokemon = [];
@@ -19,11 +22,18 @@ async function renderPokemon(siteUrl, subLimit) {
   afterRender();
 }
 
+function renderPokemonAgain() {
+  offset -= limit;
+  renderPokemon();
+}
+
 function beforeRender(subLimit) {
   // Ladeanzeige einblenden
   saveOffset();
   document.getElementById('buttonWrap').style.display = "none";
+  document.getElementById('searchWordWrap').style.display = "none";
   document.getElementById("loadingScreen").style.display = "flex";
+  document.getElementById('limitWrap').style.display = "flex";
   if (subLimit) {
     offset -= limit * 2;
     saveOffset();
@@ -36,6 +46,59 @@ function afterRender() {
   renderButtons();
   displayPokemons();
   init();
+}
+
+async function showAlert(message) {
+  const alertWrap = document.getElementById("alertWrap");
+  alertWrap.style.display = "block";
+  alertWrap.innerHTML = `${message}`;
+  await new Promise(resolve => setTimeout(resolve, 3800));
+  alertWrap.style.display = "none";
+}
+
+function filterPokemons() {
+  const searchInput = document.getElementById('searchInput').value;
+  if(searchInput.length > 2){
+    apiPokemons = apiPokemonsFull.filter(pokemon => pokemon.name.includes(searchInput));
+    search = searchInput;
+    if(apiPokemons.length > 0){
+      renderPokemonSearch();
+    } else {
+      beforeSearch();
+      document.getElementById('cardWrap').innerHTML = noPkmsFoundTemplate();
+      afterSearch();
+    }
+  }
+}
+
+function beforeSearch(){
+  document.getElementById("cardWrap").innerHTML = "";
+  document.getElementById('buttonWrap').style.display = "none";
+  document.getElementById('limitWrap').style.display = "none";
+  document.getElementById('searchWordWrap').style.display = "flex";
+  document.getElementById("loadingScreen").style.display = "flex";
+  searchRender();
+  displayedPokemon = [];
+}
+
+async function renderPokemonSearch() {
+  beforeSearch()
+  for (let i = 0; i < apiPokemons.length; i++) {
+  await getPokemonData(apiPokemons[i].url);
+  displayedPokemon.push(apiPokemonData.id);
+  renderCard(apiPokemons[i].name);
+  renderColors(i);
+  }
+  afterSearch();
+  displayPokemons();
+}
+
+function afterSearch() {
+  document.getElementById("loadingScreen").style.display = "none";
+}
+
+function searchRender() {
+  document.getElementById('searchWordWrap').innerHTML = searchTemplate();
 }
 
 function init() {
@@ -271,14 +334,23 @@ function renderEvoChainElements() {
   }
 }
 
-function loadFromLoacalstorage(){
+async function loadFromLoacalstorage(){
   limitSaved = parseInt(localStorage.getItem('limit'))
   offsetSaved = parseInt(localStorage.getItem('offset'))
+  apiPokemonsFullSaved = JSON.parse(localStorage.getItem('apiPokemonsFull'));
   if(limitSaved && offsetSaved){
     limit = limitSaved;
     offset = offsetSaved;
   }
+  if(apiPokemonsFullSaved){
+    apiPokemonsFull = apiPokemonsFullSaved
+  } else {
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=10000&offset=0`);
+    const pokemons = await response.json();
+    apiPokemonsFull = await pokemons.results;
+    localStorage.setItem('apiPokemonsFull', JSON.stringify(apiPokemonsFull));
+  }
 }
 
-renderPokemon();
+
 
